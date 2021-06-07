@@ -1,0 +1,15 @@
+<div class="types">
+    <ng-container *ngIf="!editMode; else elseTemplate">
+        <div *ngFor="let item of typesArray">
+            {{item.name}}
+        </div>
+        <button class="btn btn-danger mt-2" (click)="onDelTypes()">Очистить</button>
+        <button class="btn btn-primary mt-2 mx-2" (click)="onedit()" (click)="editMode = true">Изменить</button>
+    </ng-container>
+    <ng-template #elseTemplate>
+        <textarea id="types" cols="20" rows="5" [(ngModel)]="strtypes"></textarea>
+        <div class="col-12">
+            <button class="btn btn-primary mt-2" (click)="onSaveTypes()" (click)="editMode = false">Сохранить</button>
+        </div>
+    </ng-template>
+</div>

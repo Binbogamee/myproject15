@@ -1,0 +1,40 @@
+<form [formGroup]="noteForm">
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <input type="text" class="form-control" id="name" placeholder="Название" formControlName="name"
+            [ngClass]="{'has-error': noteForm.get('name').invalid && noteForm.get('name').touched}">
+          <small class="form-text text-muted">обязательное поле длиной до 50 символов</small>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          <textarea name="notes" id="text" cols="30" rows="3" class="form-control" placeholder="Текст"
+            formControlName="text"
+            [ngClass]="{'has-error': noteForm.get('text').invalid && noteForm.get('text').touched}"></textarea>
+          <small class="form-text text-muted">обязательное поле длиной до 300 символов</small>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          Тип:
+          <select class="form-control" formControlName="type"
+            [ngClass]="{'has-error': noteForm.get('type').invalid && noteForm.get('type').touched}">
+            <option value=""></option>
+            <option *ngFor="let item of types">{{item.name}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="row-3 mt-2">
+    <div class="col-12">
+      <button class="btn btn-primary" [disabled]="noteForm.invalid" (click)="onSaveNote()">Сохранить</button>
+      <ng-container *ngIf="!postTypes; else elseTemplate">
+        <button class="btn btn-primary mx-2" (click)="onPostTypes()">Типы заметок</button>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <button class="btn btn-primary mx-2" (click)="onPostTypes()">Заметки</button>
+      </ng-template>
+    </div>
+  </div>

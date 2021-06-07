@@ -1,0 +1,50 @@
+<div class="note">
+    <ng-container *ngIf="!editMode; else elseTemplate">
+        <div class="row">
+            <div class="col-12">{{mynote.id}}. Тип: {{temptype}}</div>
+            <div class="col-12">{{mynote.name}}</div>
+            <div class="col-12">{{mynote.text}}</div>
+            <div class="col-12">Дата создания:
+                {{mynote.createDate | date:"dd.MM.yyyy"}}
+                {{mynote.createDate | date:"HH:mm:ss"}}
+            </div>
+            <div class="col-12" *ngIf="mynote.editDate != undefined">Последнее изменение:
+                {{mynote.editDate | date:"dd.MM.yyyy"}}
+                {{mynote.editDate | date:"HH:mm:ss"}}
+            </div>
+        </div>
+        <button class="btn btn-danger" (click)="onDeleteNote(mynote.id)">Удалить</button>
+        <button class="btn btn-primary mx-2" (click)="editMode = true">Редактировать</button>
+    </ng-container>
+    <ng-template #elseTemplate>
+        <form [formGroup]="mynoteForm">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        Название:
+                        <input type="text" class="form-control" id="name" formControlName="name"
+                            [ngClass]="{'has-error': mynoteForm.get('name').invalid}">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        Текст:
+                        <textarea name="notes" id="text" cols="30" rows="5" class="form-control" 
+                        formControlName="text" [ngClass]="{'has-error': mynoteForm.get('text').invalid}"></textarea>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        Тип:
+                        <select class="form-control" id="type" formControlName="type">
+                            <option *ngFor="let item of types">{{item.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-primary mt-2" [disabled]="mynoteForm.invalid" (click)="onSaveEditNote()">Сохранить</button>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+</div>
